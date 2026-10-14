@@ -1,28 +1,33 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>GMAO</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="GMAO">
 <meta name="application-name" content="GMAO">
-<meta name="theme-color" content="#434343">
+<meta name="theme-color" content="#E5E0D5">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="manifest" href="manifest.json">
-<script>
-var APP="https://script.google.com/macros/s/AKfycbx19Tt5VRF5kOuUrlVZx4cc9KOWS15EE8O_qQ1klon-y7gxlu5l-cQuLt3VowZZOQjx/exec";
-if(location.search.indexOf("instalar")<0){location.replace(APP);}
-</script>
 <style>
-body{margin:0;min-height:100vh;background:#434343;color:#fff;font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;display:flex;align-items:center;justify-content:center;padding:24px;box-sizing:border-box}
-main{max-width:380px;text-align:center}
-img{width:132px;height:132px;border-radius:30px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
-h1{font-size:22px;margin:18px 0 4px}
-p{color:#d8d4cc;margin:6px 0}
-ul{text-align:left;background:rgba(255,255,255,.06);border-radius:14px;padding:16px 16px 16px 36px;margin:20px 0}
-li{margin:6px 0} b{color:#F5C972}
-a.btn{display:inline-block;margin-top:6px;background:#F5C972;color:#3E3226;text-decoration:none;font-weight:600;padding:12px 22px;border-radius:12px}
+html,body{margin:0;height:100%;background:#E5E0D5}
+#app{position:fixed;top:0;left:0;width:100%;height:100%;border:0;display:block;background:#E5E0D5;visibility:hidden}
+#carga{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#5b5346}
+#carga img{width:84px;height:84px;border-radius:20px;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+#carga a{color:#8A6F35;font-size:13px;display:none}
+#inst{display:none;min-height:100%;background:#434343;color:#fff;font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;align-items:center;justify-content:center;padding:24px;box-sizing:border-box}
+#inst main{max-width:380px;text-align:center}
+#inst img{width:132px;height:132px;border-radius:30px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+#inst h1{font-size:22px;margin:18px 0 4px}
+#inst p{color:#d8d4cc;margin:6px 0}
+#inst ul{text-align:left;background:rgba(255,255,255,.06);border-radius:14px;padding:16px 16px 16px 36px;margin:20px 0}
+#inst li{margin:6px 0} #inst b{color:#F5C972}
+#inst a.btn{display:inline-block;margin-top:6px;background:#F5C972;color:#3E3226;text-decoration:none;font-weight:600;padding:12px 22px;border-radius:12px}
 </style></head>
-<body><main>
+<body>
+<div id="inst"><main>
 <img src="apple-touch-icon.png" alt="Icono GMAO">
 <h1>GMAO · Staybrick</h1>
 <p>Añade la app a la pantalla de inicio de tu móvil:</p>
@@ -30,9 +35,22 @@ a.btn{display:inline-block;margin-top:6px;background:#F5C972;color:#3E3226;text-
 <li><b>iPhone:</b> abre esta página en Safari, pulsa <b>Compartir</b> y después <b>Añadir a pantalla de inicio</b>.</li>
 <li><b>Android:</b> abre esta página en Chrome, pulsa <b>⋮</b> y después <b>Añadir a pantalla de inicio</b>.</li>
 </ul>
-<a class="btn" href="https://script.google.com/macros/s/AKfycbx19Tt5VRF5kOuUrlVZx4cc9KOWS15EE8O_qQ1klon-y7gxlu5l-cQuLt3VowZZOQjx/exec">Abrir la app ahora</a>
-</main>
+<a class="btn" href="./">Abrir la app ahora</a>
+</main></div>
+<div id="carga"><img src="apple-touch-icon.png" alt=""><span>Cargando GMAO…</span><a id="directo" href="https://script.google.com/macros/s/AKfycbx19Tt5VRF5kOuUrlVZx4cc9KOWS15EE8O_qQ1klon-y7gxlu5l-cQuLt3VowZZOQjx/exec">¿No carga? Ábrela aquí</a></div>
 <script>
-if(location.search.indexOf("instalar")>=0&&history.replaceState){history.replaceState(null,"",location.pathname);}
+var APP="https://script.google.com/macros/s/AKfycbx19Tt5VRF5kOuUrlVZx4cc9KOWS15EE8O_qQ1klon-y7gxlu5l-cQuLt3VowZZOQjx/exec";
+if(location.search.indexOf("instalar")>=0){
+  document.getElementById("carga").style.display="none";
+  document.getElementById("inst").style.display="flex";
+  if(history.replaceState)history.replaceState(null,"",location.pathname);
+}else{
+  var f=document.createElement("iframe");
+  f.id="app";f.title="GMAO";f.src=APP;
+  f.setAttribute("allow","clipboard-write");
+  f.onload=function(){f.style.visibility="visible";document.getElementById("carga").style.display="none"};
+  document.body.appendChild(f);
+  setTimeout(function(){document.getElementById("directo").style.display="inline"},8000);
+}
 </script>
 </body></html>
