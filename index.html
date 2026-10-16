@@ -46,7 +46,8 @@ if(location.search.indexOf("instalar")>=0){
   if(history.replaceState)history.replaceState(null,"",location.pathname);
 }else{
   var f=document.createElement("iframe");
-  f.id="app";f.title="GMAO";f.src=APP;
+  var ir=(location.search.match(/[?&]ir=([A-Za-z0-9_:%-]+)/)||[])[1];
+  f.id="app";f.title="GMAO";f.src=APP+(ir?"?ir="+ir:"");
   f.setAttribute("allow","clipboard-write");
   f.onload=function(){f.style.visibility="visible";document.getElementById("carga").style.display="none"};
   document.body.appendChild(f);
