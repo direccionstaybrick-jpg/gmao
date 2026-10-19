@@ -48,6 +48,9 @@ if(location.search.indexOf("instalar")>=0){
   var f=document.createElement("iframe");
   var ir=(location.search.match(/[?&]ir=([A-Za-z0-9_:%-]+)/)||[])[1];
   var tgd=((location.hash||"").match(/[#&]tgWebAppData=([^&]+)/)||[])[1];
+  if(!ir&&tgd){var sp=(location.search.match(/[?&]tgWebAppStartParam=([A-Za-z0-9_-]+)/)||[])[1];
+    if(!sp){try{sp=(decodeURIComponent(tgd).match(/(?:^|&)start_param=([A-Za-z0-9_-]+)/)||[])[1]}catch(e){}}
+    if(sp)ir=encodeURIComponent(sp.replace("_",":"));}
   var q=[];if(ir)q.push("ir="+ir);if(tgd)q.push("tgd="+tgd);
   f.id="app";f.title="GMAO";f.src=APP+(q.length?"?"+q.join("&"):"");
   if(tgd){var s=document.createElement("script");s.src="https://telegram.org/js/telegram-web-app.js";
