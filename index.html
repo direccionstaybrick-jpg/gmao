@@ -47,7 +47,14 @@ if(location.search.indexOf("instalar")>=0){
 }else{
   var f=document.createElement("iframe");
   var ir=(location.search.match(/[?&]ir=([A-Za-z0-9_:%-]+)/)||[])[1];
-  f.id="app";f.title="GMAO";f.src=APP+(ir?"?ir="+ir:"");
+  var tgd=((location.hash||"").match(/[#&]tgWebAppData=([^&]+)/)||[])[1];
+  var q=[];if(ir)q.push("ir="+ir);if(tgd)q.push("tgd="+tgd);
+  f.id="app";f.title="GMAO";f.src=APP+(q.length?"?"+q.join("&"):"");
+  if(tgd){var s=document.createElement("script");s.src="https://telegram.org/js/telegram-web-app.js";
+    s.onload=function(){try{var w=window.Telegram&&Telegram.WebApp;if(!w)return;w.ready();w.expand();
+      if(w.disableVerticalSwipes)w.disableVerticalSwipes();
+      if(w.setHeaderColor)w.setHeaderColor("#E5E0D5");if(w.setBackgroundColor)w.setBackgroundColor("#E5E0D5")}catch(e){}};
+    document.head.appendChild(s);}
   f.setAttribute("allow","clipboard-write");
   f.onload=function(){f.style.visibility="visible";document.getElementById("carga").style.display="none"};
   document.body.appendChild(f);
